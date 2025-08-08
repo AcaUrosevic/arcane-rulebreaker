@@ -266,9 +266,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 841f85d87c8605e41b3e12b2785fe9ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireballPrefab: {fileID: 5964429153062912153, guid: 5f83705c3477c3640a62029d7215ad3e, type: 3}
+  fireballPrefab: {fileID: 3411466107571416965, guid: 7d6aa3057d0b5264db7c86b55a000027, type: 3}
   castPoint: {fileID: 1813428141}
   fireballCooldown: 1.5
+  iceSpellPrefab: {fileID: 3644517657110357101, guid: 44032a405272c9147973fd86a2f7c407, type: 3}
+  iceCooldown: 5
 --- !u!1 &660039322
 GameObject:
   m_ObjectHideFlags: 0
