@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class FrostOrb : MonoBehaviour
 {
-    public float speed = 8f;
+    public float speed = 10f;
     public float lifetime = 5f;
+
     public float slowRadius = 3f;
-    public float slowAmount = 0.5f;
+    public float slowMultiplier = 0.5f;
     public float slowDuration = 3f;
 
     void Start()
@@ -20,19 +21,25 @@ public class FrostOrb : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, slowRadius);
-        foreach (var hit in hitColliders)
-        /*{
+        Collider[] hits = Physics.OverlapSphere(transform.position, slowRadius, ~0, QueryTriggerInteraction.Ignore);
+        foreach (var hit in hits)
+        {
             if (hit.CompareTag("Enemy"))
             {
-                EnemyMovement enemy = hit.GetComponent<EnemyMovement>();
-                if (enemy != null)
+                var mover = hit.GetComponent<EnemyMovement>();
+                if (mover != null)
                 {
-                    enemy.ApplySlow(slowAmount, slowDuration);
+                    mover.ApplySlow(slowMultiplier, slowDuration);
                 }
             }
-        }*/
+        }
 
         Destroy(gameObject);
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, slowRadius);
     }
 }

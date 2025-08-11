@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 7962961854944216776}
   - component: {fileID: 4520041585913504425}
   - component: {fileID: 3773641089809425174}
-  - component: {fileID: 3923159903765654056}
   - component: {fileID: 5497420877398292901}
   - component: {fileID: 7675363233390569955}
+  - component: {fileID: 6306866220463533938}
   m_Layer: 7
   m_Name: FrostOrb
   m_TagString: Untagged
@@ -123,20 +123,6 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &3923159903765654056
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3644517657110357101}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8557a174b8b63a4dbf35eb9fd6f7a8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 10
-  lifetime: 5
 --- !u!135 &5497420877398292901
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -152,12 +138,12 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 1.5
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 3, z: 0}
 --- !u!54 &7675363233390569955
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -179,9 +165,26 @@ Rigidbody:
     serializedVersion: 2
     m_Bits: 0
   m_ImplicitCom: 1
-  m_ImplicitTensor: 1
+  m_ImplicitTensor: 0
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &6306866220463533938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3644517657110357101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ca1927ebd26a5a4bb884861e993c9f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 10
+  lifetime: 5
+  slowRadius: 3
+  slowMultiplier: 0.5
+  slowDuration: 3
