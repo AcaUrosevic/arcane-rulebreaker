@@ -22,6 +22,13 @@ public class SpellCaster : MonoBehaviour
     public int hollowPurpleUsesPerRound = 3;
     int hollowPurpleUsesLeft;
 
+    Animator anim;
+
+    void Awake()
+    {
+        anim = GetComponentInChildren<Animator>();
+    }
+
     void OnEnable()
     {
         hollowPurpleUsesLeft = hollowPurpleUsesPerRound;
@@ -64,12 +71,14 @@ public class SpellCaster : MonoBehaviour
 
     void CastFireball()
     {
+        anim?.SetTrigger("Cast");
         Instantiate(fireballPrefab, castPoint.position, transform.rotation);
         lastFireballTime = Time.time;
     }
 
     void CastFrost()
     {
+        anim?.SetTrigger("Cast");
         Instantiate(frostOrbPrefab, castPoint.position, transform.rotation);
         lastFrostTime = Time.time;
         if (RuleManager.Instance) RuleManager.Instance.ReportViolation("Use of Spell #2 is forbidden");
@@ -77,6 +86,7 @@ public class SpellCaster : MonoBehaviour
 
     void CastHollowPurple()
     {
+        anim?.SetTrigger("Cast");
         var obj = Instantiate(hollowPurplePrefab, castPoint.position, transform.rotation);
         var hp = obj.GetComponent<HollowPurple>();
         if (hp != null) hp.speed = hollowPurpleSpeed;

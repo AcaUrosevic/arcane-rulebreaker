@@ -1067,6 +1067,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cb146fed83e701e4b8c7f6179c56f7a2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 297988173}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cb146fed83e701e4b8c7f6179c56f7a2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 297988174}
   m_SourcePrefab: {fileID: 100100000, guid: cb146fed83e701e4b8c7f6179c56f7a2, type: 3}
 --- !u!4 &297988171 stripped
 Transform:
@@ -1099,6 +1102,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 4, y: 0.8, z: 4}
   m_Center: {x: 0, y: 0.45, z: 0}
+--- !u!114 &297988174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 297988172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f94f75893876b644e8e6631bc89f6149, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &299496897
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1495,6 +1510,30 @@ MonoBehaviour:
   dashSpeed: 18
   dashDuration: 0.2
   dashCooldown: 1
+  iFramesDuringDash: 1
+--- !u!95 &383930406 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4697401321393030885, guid: b2311295736eb1f46bf4239430ca19df, type: 3}
+  m_PrefabInstance: {fileID: 1135209307571393802}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &383930407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383930394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15f5061c437eb4b4285250202d12cd2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 100
+  currentHP: 0
+  deathDelay: 1
+  anim: {fileID: 383930406}
+  invulnerable: 1
+  minHitInterval: 0.1
 --- !u!1001 &406016310
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3547,6 +3586,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cb146fed83e701e4b8c7f6179c56f7a2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 848791352}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cb146fed83e701e4b8c7f6179c56f7a2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 848791353}
   m_SourcePrefab: {fileID: 100100000, guid: cb146fed83e701e4b8c7f6179c56f7a2, type: 3}
 --- !u!4 &848791350 stripped
 Transform:
@@ -3579,6 +3621,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 4, y: 0.8, z: 4}
   m_Center: {x: 0, y: 0.45, z: 0}
+--- !u!114 &848791353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 848791351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f94f75893876b644e8e6631bc89f6149, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &869660661
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8937,6 +8991,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1173913626023104871, guid: b2311295736eb1f46bf4239430ca19df, type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 383930406}
     - target: {fileID: 1716057591918419103, guid: b2311295736eb1f46bf4239430ca19df, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -8981,6 +9039,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mage
       objectReference: {fileID: 0}
+    - target: {fileID: 4697401321393030885, guid: b2311295736eb1f46bf4239430ca19df, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: c0e315665b5a0ef48bca62b92d03486b, type: 2}
+    - target: {fileID: 4697401321393030885, guid: b2311295736eb1f46bf4239430ca19df, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6294661068453206199, guid: b2311295736eb1f46bf4239430ca19df, type: 3}
       propertyPath: m_UseGravity
       value: 1
@@ -9004,6 +9070,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2061375279826765349, guid: b2311295736eb1f46bf4239430ca19df, type: 3}
       insertIndex: -1
       addedObject: {fileID: 383930404}
+    - targetCorrespondingSourceObject: {fileID: 2061375279826765349, guid: b2311295736eb1f46bf4239430ca19df, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 383930407}
   m_SourcePrefab: {fileID: 100100000, guid: b2311295736eb1f46bf4239430ca19df, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

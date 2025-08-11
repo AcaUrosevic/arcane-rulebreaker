@@ -29,7 +29,15 @@ public class EnemyHealth : MonoBehaviour, IDamageable
 
     void Die()
     {
+        var anim = GetComponentInChildren<Animator>();
+        if (anim) anim.SetBool("Dead", true);
+
         if (SpawnManager.Instance) SpawnManager.Instance.OnEnemyDied();
-        Destroy(gameObject);
+
+        var colls = GetComponentsInChildren<Collider>();
+        foreach (var c in colls) c.enabled = false;
+
+        Destroy(gameObject, 1.2f);
     }
+
 }

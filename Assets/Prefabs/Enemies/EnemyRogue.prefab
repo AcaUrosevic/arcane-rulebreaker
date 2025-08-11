@@ -248,6 +248,18 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 1f9de5426b33ca142af467f49878e4a0, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 5022a3ec3d609f549a03b7ca2549690e, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 1f9de5426b33ca142af467f49878e4a0, type: 3}
+      propertyPath: m_CullingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 1f9de5426b33ca142af467f49878e4a0, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5955587965034945854, guid: 1f9de5426b33ca142af467f49878e4a0, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -351,7 +363,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
-  rb: {fileID: 0}
+  rb: {fileID: 9128672289832162243}
   hitImpulse: 2
 --- !u!114 &8341029779038325194
 MonoBehaviour:
@@ -367,3 +379,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 3
   rotationSpeed: 10
+  attackRange: 1.8
+  attackCooldown: 1
+  attackDamage: 10
+  attackHitDelay: 0.2
+  anim: {fileID: 8072415766260766578}
+--- !u!95 &8072415766260766578 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 1f9de5426b33ca142af467f49878e4a0, type: 3}
+  m_PrefabInstance: {fileID: 2408421909096884963}
+  m_PrefabAsset: {fileID: 0}

@@ -14,10 +14,14 @@ public class DashController : MonoBehaviour
     private bool isDashing = false;
     private float lastDashTime = -999f;
 
+    private PlayerHealth playerHealth;
+    public bool iFramesDuringDash = true;
+
     void Awake()
     {
         movement = GetComponent<PlayerMovement>();
         dashCounter = GetComponent<DashCounterPerWave>();
+        playerHealth = GetComponent<PlayerHealth>();
     }
 
     void Update()
@@ -45,15 +49,16 @@ public class DashController : MonoBehaviour
             ? movement.MoveInputRaw.normalized
             : transform.forward;
 
+        if (iFramesDuringDash) playerHealth?.SetInvulnerable(true);
+
         movement.SetExternalVelocity(dir * dashSpeed);
         Debug.Log("[Dash] START");
-
         dashCounter?.OnDashed();
-
 
         yield return new WaitForSeconds(dashDuration);
 
         movement.SetExternalVelocity(Vector3.zero);
+        if (iFramesDuringDash) playerHealth?.SetInvulnerable(false);
         Debug.Log("[Dash] END");
 
         isDashing = false;

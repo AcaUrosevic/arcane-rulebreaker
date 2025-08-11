@@ -8,11 +8,13 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 moveDirection;
     private Vector3 externalVelocity;
     public Vector3 MoveInputRaw { get; private set; }
+    public Animator anim;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+        if (!anim) anim = GetComponentInChildren<Animator>();
     }
 
     void Update()
@@ -21,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
         float moveZ = Input.GetAxisRaw("Vertical");
         MoveInputRaw = new Vector3(moveX, 0f, moveZ);
         moveDirection = MoveInputRaw.normalized;
+
+        
     }
 
     void FixedUpdate()
@@ -29,6 +33,12 @@ public class PlayerMovement : MonoBehaviour
         Vector3 total = baseVel + externalVelocity;
 
         rb.MovePosition(rb.position + total * Time.fixedDeltaTime);
+
+        if (anim)
+        {
+            float planar = new Vector3(total.x, 0f, total.z).magnitude;
+            anim.SetFloat("Speed", planar);
+        }
     }
 
     public void SetExternalVelocity(Vector3 v)
