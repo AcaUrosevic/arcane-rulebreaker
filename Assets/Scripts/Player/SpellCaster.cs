@@ -72,6 +72,7 @@ public class SpellCaster : MonoBehaviour
     {
         Instantiate(frostOrbPrefab, castPoint.position, transform.rotation);
         lastFrostTime = Time.time;
+        if (RuleManager.Instance) RuleManager.Instance.ReportViolation("Use of Spell #2 is forbidden");
     }
 
     void CastHollowPurple()
