@@ -2,38 +2,84 @@ using UnityEngine;
 
 public class SpellCaster : MonoBehaviour
 {
-    public GameObject fireballPrefab;
+    [Header("Refs")]
     public Transform castPoint;
+    public Camera mainCamera;
+
+    [Header("Fireball")]
+    public GameObject fireballPrefab;
     public float fireballCooldown = 1.5f;
-    private float lastCastTime;
+    float lastFireballTime = -999f;
 
-    public GameObject iceSpellPrefab;
-    public float iceCooldown = 5f;
-    private float lastIceTime;
+    [Header("Frost Orb")]
+    public GameObject frostOrbPrefab;
+    public float frostCooldown = 5f;
+    float lastFrostTime = -999f;
 
+    [Header("Hollow Purple")]
+    public GameObject hollowPurplePrefab;
+    public float hollowPurpleSpeed = 12f;
+    public int hollowPurpleUsesPerRound = 3;
+    int hollowPurpleUsesLeft;
+
+    void OnEnable()
+    {
+        hollowPurpleUsesLeft = hollowPurpleUsesPerRound;
+        if (RoundManager.Instance != null)
+            RoundManager.Instance.OnRoundStarted += ResetHollowPurpleUses;
+    }
+
+    void OnDisable()
+    {
+        if (RoundManager.Instance != null)
+            RoundManager.Instance.OnRoundStarted -= ResetHollowPurpleUses;
+    }
+
+    void ResetHollowPurpleUses()
+    {
+        hollowPurpleUsesLeft = hollowPurpleUsesPerRound;
+    }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && Time.time >= lastCastTime + fireballCooldown)
-        {
+        if (Input.GetMouseButtonDown(0) && CanCastFireball())
             CastFireball();
-        }
-        if (Input.GetMouseButtonDown(1) && Time.time >= lastIceTime + iceCooldown)
-        {
-            CastIce();
-            lastIceTime = Time.time;
-        }
+
+        if (Input.GetMouseButtonDown(1) && CanCastFrost())
+            CastFrost();
+
+        if (Input.GetKeyDown(KeyCode.Q) && CanCastHollowPurple())
+            CastHollowPurple();
+    }
+
+    bool CanCastFireball() => Time.time >= lastFireballTime + fireballCooldown;
+    bool CanCastFrost()    => Time.time >= lastFrostTime    + frostCooldown;
+
+    bool CanCastHollowPurple()
+    {
+        bool fireOnCD  = !CanCastFireball();
+        bool frostOnCD = !CanCastFrost();
+        return fireOnCD && frostOnCD && hollowPurpleUsesLeft > 0;
     }
 
     void CastFireball()
     {
         Instantiate(fireballPrefab, castPoint.position, transform.rotation);
-        lastCastTime = Time.time;
+        lastFireballTime = Time.time;
     }
 
-    void CastIce()
+    void CastFrost()
     {
-        Instantiate(iceSpellPrefab, castPoint.position, transform.rotation);
+        Instantiate(frostOrbPrefab, castPoint.position, transform.rotation);
+        lastFrostTime = Time.time;
     }
 
+    void CastHollowPurple()
+    {
+        var obj = Instantiate(hollowPurplePrefab, castPoint.position, transform.rotation);
+        var hp = obj.GetComponent<HollowPurple>();
+        if (hp != null) hp.speed = hollowPurpleSpeed;
+
+        hollowPurpleUsesLeft--;
+    }
 }
