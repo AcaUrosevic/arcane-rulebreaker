@@ -12,8 +12,17 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: d720145d6fb513a47864a4fe50010ae1
   - enabled: 1
-    path: Assets/Scenes/GameScene.unity
+    path: Assets/Scenes/TutorialInfo.unity
+    guid: ecb57f85a08b0ff4cbd329b7c9ef9023
+  - enabled: 1
+    path: Assets/Scenes/TutorialScene.unity
     guid: d9878559e5f6e9548bdf61a2f19778e6
+  - enabled: 1
+    path: Assets/Scenes/DefeatScene.unity
+    guid: e003ed7f0066a484c829ef37c2ae801b
+  - enabled: 1
+    path: Assets/Scenes/VictoryScene.unity
+    guid: b2c670a4c86ec994389049310ce83e13
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

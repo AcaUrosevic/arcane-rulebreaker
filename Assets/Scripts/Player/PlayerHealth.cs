@@ -59,6 +59,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         var mv = GetComponent<PlayerMovement>(); if (mv) mv.enabled = false;
         var dc = GetComponent<DashController>(); if (dc) dc.enabled = false;
 
+        RuleManager.Instance?.TriggerGameOver("Player died");
+
     }
 
     public void SetInvulnerable(bool value)

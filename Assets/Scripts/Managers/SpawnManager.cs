@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -14,6 +13,9 @@ public class SpawnManager : MonoBehaviour
     public int enemiesPerWave = 6;
     public float spawnInterval = 0.6f;
 
+    [Header("Rounds")]
+    public int maxRounds = 3;
+
     int alive;
     bool spawning;
 
@@ -22,7 +24,11 @@ public class SpawnManager : MonoBehaviour
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
     }
-    void Start(){ StartWave(); }
+
+    void Start()
+    {
+        StartWave();
+    }
 
     public void StartWave()
     {
@@ -37,7 +43,7 @@ public class SpawnManager : MonoBehaviour
         {
             var p = spawnPoints[Random.Range(0, spawnPoints.Length)];
             var e = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
-            var go = Instantiate(e, p.position, p.rotation);
+            Instantiate(e, p.position, p.rotation);
             alive++;
             yield return new WaitForSeconds(spawnInterval);
         }
@@ -47,11 +53,24 @@ public class SpawnManager : MonoBehaviour
     public void OnEnemyDied()
     {
         alive = Mathf.Max(0, alive - 1);
+
         if (alive == 0 && !spawning)
         {
-            if (RoundManager.Instance) RoundManager.Instance.StartNewRound();
+            if (RoundManager.Instance != null)
+            {
+                int current = RoundManager.Instance.currentRound;
+                if (current >= maxRounds)
+                {
+                    GameFlowManager.Instance?.Victory();
+                    return;
+                }
+
+                RoundManager.Instance.StartNewRound();
+            }
+
             enemiesPerWave += 2;
             spawnInterval = Mathf.Max(0.25f, spawnInterval - 0.05f);
+
             StartWave();
         }
     }

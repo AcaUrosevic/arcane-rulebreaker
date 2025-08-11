@@ -9,9 +9,9 @@ public class RuleManager : MonoBehaviour
     public int allowedViolations = 3;
     public int currentViolations = 0;
 
-    public event Action<int, int> OnTokensChanged;   // current,max
-    public event Action<string> OnRuleViolated;      // poruka
-    public event Action OnGameOver;                  // subscribe spolja, ali Invoke samo ovde
+    public event Action<int, int> OnTokensChanged;
+    public event Action<string> OnRuleViolated;
+    public event Action OnGameOver;
 
     public bool IsGameOver { get; private set; } = false;
 
@@ -48,6 +48,8 @@ public class RuleManager : MonoBehaviour
             Debug.Log($"[RuleManager] GAME OVER – {reason}");
         else
             Debug.Log("[RuleManager] GAME OVER");
+
+        GameFlowManager.Instance?.Lose(reason);
     }
 
 }

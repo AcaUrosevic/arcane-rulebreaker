@@ -10,7 +10,7 @@ public class MainMenuUI : MonoBehaviour
 
     public void PlayTutorial()
     {
-        SceneManager.LoadScene("TutorialScene");
+        SceneManager.LoadScene("TutorialInfo");
     }
 
     public void QuitGame()

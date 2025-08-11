@@ -24,9 +24,12 @@ public class SpellCaster : MonoBehaviour
     int hollowPurpleUsesLeft;
 
     Animator anim;
+
     public event Action<int,int> OnHollowUsesChanged;
     public int HollowLeft => hollowPurpleUsesLeft;
     public int HollowPerRound => hollowPurpleUsesPerRound;
+
+    bool subscribed = false;
 
     void Awake()
     {
@@ -37,14 +40,34 @@ public class SpellCaster : MonoBehaviour
     {
         hollowPurpleUsesLeft = hollowPurpleUsesPerRound;
         OnHollowUsesChanged?.Invoke(hollowPurpleUsesLeft, hollowPurpleUsesPerRound);
-        if (RoundManager.Instance != null)
-            RoundManager.Instance.OnRoundStarted += ResetHollowPurpleUses;
+
+        TrySubscribe();
+    }
+
+    void Start()
+    {
+        TrySubscribe();
     }
 
     void OnDisable()
     {
+        TryUnsubscribe();
+    }
+
+    void TrySubscribe()
+    {
+        if (subscribed) return;
+        if (RoundManager.Instance == null) return;
+        RoundManager.Instance.OnRoundStarted += ResetHollowPurpleUses;
+        subscribed = true;
+    }
+
+    void TryUnsubscribe()
+    {
+        if (!subscribed) return;
         if (RoundManager.Instance != null)
             RoundManager.Instance.OnRoundStarted -= ResetHollowPurpleUses;
+        subscribed = false;
     }
 
     void ResetHollowPurpleUses()
@@ -87,7 +110,6 @@ public class SpellCaster : MonoBehaviour
         anim?.SetTrigger("Cast");
         Instantiate(frostOrbPrefab, castPoint.position, transform.rotation);
         lastFrostTime = Time.time;
-        if (RuleManager.Instance) RuleManager.Instance.ReportViolation("Use of Spell #2 is forbidden");
     }
 
     void CastHollowPurple()

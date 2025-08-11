@@ -5,18 +5,43 @@ public class DashCounterPerWave : MonoBehaviour
 {
     public int maxDashesPerWave = 3;
     private int dashCount = 0;
-    
+
     public int Current => dashCount;
     public int Max => maxDashesPerWave;
     public event Action<int, int> OnDashCountChanged;
 
+    bool subscribed = false;
+
     void OnEnable()
     {
-        if (RoundManager.Instance) RoundManager.Instance.OnRoundStarted += ResetWave;
+        TrySubscribe();
     }
+
+    void Start()
+    {
+        TrySubscribe();
+        OnDashCountChanged?.Invoke(dashCount, maxDashesPerWave);
+    }
+
     void OnDisable()
     {
-        if (RoundManager.Instance) RoundManager.Instance.OnRoundStarted -= ResetWave;
+        TryUnsubscribe();
+    }
+
+    void TrySubscribe()
+    {
+        if (subscribed) return;
+        if (RoundManager.Instance == null) return;
+        RoundManager.Instance.OnRoundStarted += ResetWave;
+        subscribed = true;
+    }
+
+    void TryUnsubscribe()
+    {
+        if (!subscribed) return;
+        if (RoundManager.Instance != null)
+            RoundManager.Instance.OnRoundStarted -= ResetWave;
+        subscribed = false;
     }
 
     public void OnDashed()

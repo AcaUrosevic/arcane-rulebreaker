@@ -501,9 +501,12 @@ MonoBehaviour:
   playButton: {fileID: 1904115010}
   backToMenuButton: {fileID: 965250845}
   nextButton: {fileID: 364807481}
-  gameSceneName: GameScene
+  gameSceneName: TutorialScene
   mainMenuSceneName: MainMenu
   enableKeyboardShortcuts: 1
+  autoLabelNext: 0
+  nextButtonLabelTMP: {fileID: 0}
+  nextButtonLabelLegacy: {fileID: 0}
 --- !u!1 &956677619
 GameObject:
   m_ObjectHideFlags: 0

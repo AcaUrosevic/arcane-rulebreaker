@@ -29,8 +29,8 @@ public class TutorialOverlayUI : MonoBehaviour
 
     [Header("Options")]
     public bool enableKeyboardShortcuts = true;
-    public bool autoLabelNext = false;              // <- NOVO: default false
-    public TextMeshProUGUI nextButtonLabelTMP;      // <- ostavi null ako ne želiš tekst
+    public bool autoLabelNext = false;
+    public TextMeshProUGUI nextButtonLabelTMP;
     public Text nextButtonLabelLegacy;
 
     int index = 0;
@@ -41,7 +41,6 @@ public class TutorialOverlayUI : MonoBehaviour
         if (playButton) playButton.onClick.AddListener(StartGame);
         if (backToMenuButton) backToMenuButton.onClick.AddListener(BackToMenu);
 
-        // osiguraj da tekst ne blokira klik
         if (bodyTMP) bodyTMP.raycastTarget = false;
         if (legacyBody) legacyBody.raycastTarget = false;
     }
@@ -53,34 +52,36 @@ public class TutorialOverlayUI : MonoBehaviour
             pages = new List<Page>
             {
                 new Page { body =
-    @"Welcome to Arcane Rulebreaker.
-    
-    You take on the role of a young wizard trapped inside the Tower of Rules, where your only chance is to — carefully — break only three of them.
-    Ahead of you lie three waves of enemies and just a little time to bring chaos under control.
-    Master the rhythm: movement, dodging, and casting at the right moment."},
-    
-                new Page { body =
-    @"Your powers:
-    
-    • Fireball (Left Click) — a fast projectile dealing solid damage.
-    • Frost Orb (Right Click) — a projectile that explodes and SLOWS enemies in its radius.
-    • Hollow Purple (Q) — the ultimate strike (damage + slow in AoE), AVAILABLE only when both Fireball and Frost Orb are on COOLDOWN and only 3× per round.
-    
-    Master the timing and combine arena space with your spells."},
-    
-                new Page { body =
-    @"Rules (important for survival):
-    • You may break EXACTLY 3 rules — the fourth one means Game Over.
-    • Implemented restrictions:
-      – Using Spell #2 (Frost) is forbidden → each use counts as a violation.
-      – Do not stand still for more than 3 seconds (violation).
-      – Do not step on red tiles (violation + damage).
-      – Do not use dash more than 3 times per wave (violation).
-    
-    Goal:
-    • Survive 3 waves for ~3 minutes. Clear the arena before time runs out and before breaking the 4th rule."
-                }
+@"Welcome to Arcane Rulebreaker.
+
+You are a young wizard trapped inside the Tower of Rules. The tower bends to the law of three:
+• 3 waves to survive,
+• 3 minutes on the clock,
+• 3 rules you must not break — but you may violate up to 3 times in total.
+
+Find the rhythm: move, dash, dodge and cast at the right moment."},
+
+    new Page { body =
+@"Your tools of survival:
+
+• Fireball (Left Click) — quick projectile dealing solid damage.
+• Frost Orb (Right Click) — projectile that explodes and SLOWS enemies in an area.
+• Hollow Purple (Q) — a combined strike (AoE damage + slow), available only when BOTH Fireball and Frost are on cooldown, with 3 uses per round.
+• Dash (Space) — a short burst of speed to reposition or evade. You get 3 dashes per wave before it counts as violations."},
+
+    new Page { body =
+@"The three rules (and your three allowed violations):
+
+• Do NOT use more than 3 dashes in a single wave.
+• Do NOT stand still for 3 seconds.
+• Do NOT step on hazard (red) tiles.
+
+Goal:
+• Clear 3 waves in ~3 minutes. You have 3 total violations to spend. A fourth violation, running out of time, or dying will end the run.
+
+Good luck, Rulebreaker."}
             };
+
         }
     
         index = 0;
@@ -108,22 +109,18 @@ public class TutorialOverlayUI : MonoBehaviour
         }
         else
         {
-            // ostani na poslednjoj
             Refresh();
         }
     }
 
     void Refresh()
     {
-        // ispiši telo teksta
         string body = pages != null && pages.Count > 0 ? pages[index].body : "";
         if (bodyTMP) bodyTMP.text = body;
         if (legacyBody) legacyBody.text = body;
 
-        // Play postaje dostupan na poslednjoj strani
         if (playButton) playButton.interactable = (index >= pages.Count - 1);
 
-        // opcionalno: promena labela ako želiš (ostavi sve null = bez teksta)
         if (autoLabelNext)
         {
             string label = (index < pages.Count - 1) ? "Next ▶" : "Done";
