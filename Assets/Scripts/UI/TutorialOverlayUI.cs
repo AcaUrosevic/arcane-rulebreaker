@@ -74,7 +74,7 @@ Find the rhythm: move, dash, dodge and cast at the right moment."},
 
 • Do NOT use more than 3 dashes in a single wave.
 • Do NOT stand still for 3 seconds.
-• Do NOT step on hazard (red) tiles.
+• Do NOT step on hazard tiles.
 
 Goal:
 • Clear 3 waves in ~3 minutes. You have 3 total violations to spend. A fourth violation, running out of time, or dying will end the run.
