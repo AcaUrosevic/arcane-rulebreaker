@@ -11,6 +11,7 @@ public class HollowPurple : MonoBehaviour
     public float damage = 35f;
     public float slowMultiplier = 0.6f;
     public float slowDuration = 3f;
+    
 
     void Start()
     {

@@ -9,9 +9,11 @@ public class RuleManager : MonoBehaviour
     public int allowedViolations = 3;
     public int currentViolations = 0;
 
-    public event Action<int,int> OnTokensChanged;  // current,max
-    public event Action<string> OnRuleViolated;    // poruka
-    public event Action OnGameOver;
+    public event Action<int, int> OnTokensChanged;   // current,max
+    public event Action<string> OnRuleViolated;      // poruka
+    public event Action OnGameOver;                  // subscribe spolja, ali Invoke samo ovde
+
+    public bool IsGameOver { get; private set; } = false;
 
     void Awake()
     {
@@ -32,12 +34,20 @@ public class RuleManager : MonoBehaviour
 
         if (currentViolations > allowedViolations)
         {
-            OnGameOver?.Invoke();
-            Debug.Log("[RuleManager] GAME OVER – prekršio si više od 3 pravila.");
+            TriggerGameOver("Too many rule violations");
         }
     }
-    
-    public void OnNewRound()
+
+    public void TriggerGameOver(string reason = null)
     {
+        if (IsGameOver) return;
+        IsGameOver = true;
+
+        OnGameOver?.Invoke();
+        if (!string.IsNullOrEmpty(reason))
+            Debug.Log($"[RuleManager] GAME OVER – {reason}");
+        else
+            Debug.Log("[RuleManager] GAME OVER");
     }
+
 }

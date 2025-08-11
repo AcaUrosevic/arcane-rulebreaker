@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour, IDamageable
@@ -15,10 +16,13 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     public float minHitInterval = 0.1f;
     float lastHitTime = -999f;
 
+    public event Action<float, float> OnHealthChanged;
+
     void Awake()
     {
         currentHP = maxHP;
         if (!anim) anim = GetComponentInChildren<Animator>();
+        OnHealthChanged?.Invoke(currentHP, maxHP);
     }
 
     public void TakeDamage(float amount)
@@ -28,6 +32,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
         lastHitTime = Time.time;
         currentHP = Mathf.Max(0f, currentHP - amount);
+        OnHealthChanged?.Invoke(currentHP, maxHP);
         Debug.Log($"[Player] HP {currentHP}/{maxHP} (-{amount})");
 
 
@@ -40,6 +45,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     public void Heal(float amount)
     {
         currentHP = Mathf.Min(maxHP, currentHP + amount);
+        OnHealthChanged?.Invoke(currentHP, maxHP);
         Debug.Log($"[Player] Heal -> {currentHP}/{maxHP}");
     }
 

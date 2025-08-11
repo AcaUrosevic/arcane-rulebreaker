@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class SpellCaster : MonoBehaviour
@@ -23,6 +24,9 @@ public class SpellCaster : MonoBehaviour
     int hollowPurpleUsesLeft;
 
     Animator anim;
+    public event Action<int,int> OnHollowUsesChanged;
+    public int HollowLeft => hollowPurpleUsesLeft;
+    public int HollowPerRound => hollowPurpleUsesPerRound;
 
     void Awake()
     {
@@ -32,6 +36,7 @@ public class SpellCaster : MonoBehaviour
     void OnEnable()
     {
         hollowPurpleUsesLeft = hollowPurpleUsesPerRound;
+        OnHollowUsesChanged?.Invoke(hollowPurpleUsesLeft, hollowPurpleUsesPerRound);
         if (RoundManager.Instance != null)
             RoundManager.Instance.OnRoundStarted += ResetHollowPurpleUses;
     }
@@ -45,6 +50,7 @@ public class SpellCaster : MonoBehaviour
     void ResetHollowPurpleUses()
     {
         hollowPurpleUsesLeft = hollowPurpleUsesPerRound;
+        OnHollowUsesChanged?.Invoke(hollowPurpleUsesLeft, hollowPurpleUsesPerRound);
     }
 
     void Update()
@@ -92,5 +98,6 @@ public class SpellCaster : MonoBehaviour
         if (hp != null) hp.speed = hollowPurpleSpeed;
 
         hollowPurpleUsesLeft--;
+        OnHollowUsesChanged?.Invoke(hollowPurpleUsesLeft, hollowPurpleUsesPerRound);
     }
 }
