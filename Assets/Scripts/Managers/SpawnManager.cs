@@ -67,8 +67,16 @@ public class SpawnManager : MonoBehaviour
 
                 RoundManager.Instance.StartNewRound();
             }
+            foreach (var prefab in enemyPrefabs)
+            {
+                var movement = prefab.GetComponent<EnemyMovement>();
+                if (movement != null)
+                {
+                    movement.moveSpeed *= 1.2f;
+                }
+            }
 
-            enemiesPerWave += 2;
+            enemiesPerWave += 4;
             spawnInterval = Mathf.Max(0.25f, spawnInterval - 0.05f);
 
             StartWave();
