@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6306866220463533938}
   m_Layer: 7
   m_Name: FrostOrb
-  m_TagString: Untagged
+  m_TagString: PlayerSpell
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

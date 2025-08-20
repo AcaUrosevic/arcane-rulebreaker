@@ -31,6 +31,14 @@ public class FrostOrb : MonoBehaviour
                 {
                     mover.ApplySlow(slowMultiplier, slowDuration);
                 }
+                else
+                {
+                    var moverCaster = hit.GetComponent<CasterEnemy>();
+                    if (moverCaster != null)
+                    {
+                        moverCaster.ApplySlow(slowMultiplier, slowDuration);
+                    }
+                }
             }
         }
 
