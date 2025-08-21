@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1397131779947318117}
   - component: {fileID: 3870460675003353672}
   - component: {fileID: 4432162082715088728}
+  - component: {fileID: 5310145114628557709}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -134,5 +135,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dde0f3c7f1121d34c926725f5d8360f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelScenes:
+  - GameScene
+  - Level3
+  - Level4
   victorySceneName: VictoryScene
   loseSceneName: DefeatScene
+--- !u!114 &5310145114628557709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5875377269355992508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2d04330971149c48b6e2b6d927748ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class GameHUD : MonoBehaviour
 {
@@ -21,37 +22,39 @@ public class GameHUD : MonoBehaviour
     void Awake()
     {
         if (!playerHealth) playerHealth = FindObjectOfType<PlayerHealth>();
-        if (!ruleManager)  ruleManager  = RuleManager.Instance;
-        if (!dashCounter)  dashCounter  = FindObjectOfType<DashCounterPerWave>();
-        if (!spellCaster)  spellCaster  = FindObjectOfType<SpellCaster>();
-        if (!gameTimer)    gameTimer    = GameTimer.Instance;
+        if (!ruleManager) ruleManager = RuleManager.Instance;
+        if (!dashCounter) dashCounter = FindObjectOfType<DashCounterPerWave>();
+        if (!spellCaster) spellCaster = FindObjectOfType<SpellCaster>();
+        if (!gameTimer) gameTimer = GameTimer.Instance;
     }
 
     void OnEnable()
     {
         if (playerHealth != null) playerHealth.OnHealthChanged += OnHealthChanged;
-        if (ruleManager  != null) ruleManager.OnTokensChanged   += OnTokensChanged;
-        if (dashCounter  != null) dashCounter.OnDashCountChanged+= OnDashChanged;
-        if (spellCaster  != null) spellCaster.OnHollowUsesChanged += OnHollowChanged;
-        if (gameTimer    != null) gameTimer.OnTimeChanged += OnTimeChanged;
+        if (ruleManager != null) ruleManager.OnTokensChanged += OnTokensChanged;
+        if (dashCounter != null) dashCounter.OnDashCountChanged += OnDashChanged;
+        if (spellCaster != null) spellCaster.OnHollowUsesChanged += OnHollowChanged;
+        if (gameTimer != null) gameTimer.OnTimeChanged += OnTimeChanged;
     }
 
     void OnDisable()
     {
         if (playerHealth != null) playerHealth.OnHealthChanged -= OnHealthChanged;
-        if (ruleManager  != null) ruleManager.OnTokensChanged   -= OnTokensChanged;
-        if (dashCounter  != null) dashCounter.OnDashCountChanged-= OnDashChanged;
-        if (spellCaster  != null) spellCaster.OnHollowUsesChanged -= OnHollowChanged;
-        if (gameTimer    != null) gameTimer.OnTimeChanged -= OnTimeChanged;
+        if (ruleManager != null) ruleManager.OnTokensChanged -= OnTokensChanged;
+        if (dashCounter != null) dashCounter.OnDashCountChanged -= OnDashChanged;
+        if (spellCaster != null) spellCaster.OnHollowUsesChanged -= OnHollowChanged;
+        if (gameTimer != null) gameTimer.OnTimeChanged -= OnTimeChanged;
     }
 
     void Start()
     {
+        StartCoroutine(LateBindAndKickoff());
+        Invoke(nameof(Rebind), 0.2f);
         if (playerHealth) OnHealthChanged(playerHealth.currentHP, playerHealth.maxHP);
-        if (ruleManager)  OnTokensChanged(ruleManager.currentViolations, ruleManager.allowedViolations);
-        if (dashCounter)  OnDashChanged(dashCounter.Current, dashCounter.Max);
-        if (spellCaster)  OnHollowChanged(spellCaster.HollowLeft, spellCaster.HollowPerRound);
-        if (gameTimer)    gameTimer.StartTimer();
+        if (ruleManager) OnTokensChanged(ruleManager.currentViolations, ruleManager.allowedViolations);
+        if (dashCounter) OnDashChanged(dashCounter.Current, dashCounter.Max);
+        if (spellCaster) OnHollowChanged(spellCaster.HollowLeft, spellCaster.HollowPerRound);
+        if (gameTimer) gameTimer.StartTimer();
     }
 
     // EVENTS → UI
@@ -82,5 +85,35 @@ public class GameHUD : MonoBehaviour
     {
         if (!timerText) return;
         timerText.text = $"{minutes:0}:{seconds:00}";
+    }
+    void Rebind()
+    {
+        Awake();
+    }
+    IEnumerator LateBindAndKickoff()
+    {
+        // Сачекај један фрејм да се RuleManager/GameTimer пробуде у новој сцени
+        yield return null;
+
+        if (!playerHealth) playerHealth = FindObjectOfType<PlayerHealth>();
+        if (!ruleManager)  ruleManager  = RuleManager.Instance;
+        if (!dashCounter)  dashCounter  = FindObjectOfType<DashCounterPerWave>();
+        if (!spellCaster)  spellCaster  = FindObjectOfType<SpellCaster>();
+        if (!gameTimer)    gameTimer    = GameTimer.Instance;
+
+        // (ре)субскрајбуј ако треба
+        OnDisable();  // очисти старе (ако их има)
+        OnEnable();   // прикачимо се на актуелне
+
+        if (playerHealth) OnHealthChanged(playerHealth.currentHP, playerHealth.maxHP);
+        if (ruleManager)  OnTokensChanged(ruleManager.currentViolations, ruleManager.allowedViolations);
+        if (dashCounter)  OnDashChanged(dashCounter.Current, dashCounter.Max);
+        if (spellCaster)  OnHollowChanged(spellCaster.HollowLeft, spellCaster.HollowPerRound);
+
+        if (gameTimer)
+        {
+            gameTimer.StopTimer();
+            gameTimer.ResetAndStart(gameTimer.startSeconds);
+        }
     }
 }

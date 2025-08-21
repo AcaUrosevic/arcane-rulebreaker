@@ -27,7 +27,7 @@ public class SpawnManager : MonoBehaviour
 
     void Start()
     {
-        StartWave();
+        StartCoroutine(StartWaveNextFrame());
     }
 
     public void StartWave()
@@ -39,14 +39,26 @@ public class SpawnManager : MonoBehaviour
     {
         spawning = true;
         alive = 0;
+
+        int currentRound = RoundManager.Instance != null ? RoundManager.Instance.currentRound : 1;
+
         for (int i = 0; i < enemiesPerWave; i++)
         {
             var p = spawnPoints[Random.Range(0, spawnPoints.Length)];
             var e = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
-            Instantiate(e, p.position, p.rotation);
+            var enemyObj = Instantiate(e, p.position, p.rotation);
             alive++;
+
+            // ✅ povećaj brzinu SAMO za ovu instancu (ne prefab!)
+            var movement = enemyObj.GetComponent<EnemyMovement>();
+            if (movement != null)
+            {
+                movement.moveSpeed *= Mathf.Pow(1.2f, currentRound - 1);
+            }
+
             yield return new WaitForSeconds(spawnInterval);
         }
+
         spawning = false;
     }
 
@@ -67,19 +79,31 @@ public class SpawnManager : MonoBehaviour
 
                 RoundManager.Instance.StartNewRound();
             }
-            foreach (var prefab in enemyPrefabs)
-            {
-                var movement = prefab.GetComponent<EnemyMovement>();
-                if (movement != null)
-                {
-                    movement.moveSpeed *= 1.2f;
-                }
-            }
+
+            // ⛔ OVO SE BRIŠE jer kvari prefab:
+            // foreach (var prefab in enemyPrefabs)
+            // {
+            //     var movement = prefab.GetComponent<EnemyMovement>();
+            //     if (movement != null)
+            //     {
+            //         movement.moveSpeed *= 1.2f;
+            //     }
+            // }
 
             enemiesPerWave += 4;
             spawnInterval = Mathf.Max(0.25f, spawnInterval - 0.05f);
 
             StartWave();
         }
+    }
+    IEnumerator StartWaveNextFrame()
+    {
+        yield return null;  // сачекај један фрејм да Bootstrap одради reset
+        StartWave();
+    }
+
+    void OnDestroy()
+    {
+        if (Instance == this) Instance = null;
     }
 }

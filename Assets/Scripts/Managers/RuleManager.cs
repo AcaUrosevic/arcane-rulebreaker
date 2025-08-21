@@ -52,4 +52,16 @@ public class RuleManager : MonoBehaviour
         GameFlowManager.Instance?.Lose(reason);
     }
 
+    public void ResetState()
+    {
+        currentViolations = 0;
+        IsGameOver = false;
+        OnTokensChanged?.Invoke(currentViolations, allowedViolations);
+    }
+
+    void OnDestroy()
+    {
+        if (Instance == this) Instance = null;
+    }
+
 }

@@ -403,7 +403,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fcbca64fcc61e6428bb9309638edfb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
+  moveSpeed: 2.5
   rotationSpeed: 10
   castRange: 7
   stopBuffer: 0.3

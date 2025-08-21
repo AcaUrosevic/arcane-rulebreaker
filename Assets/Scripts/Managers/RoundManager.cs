@@ -28,4 +28,9 @@ public class RoundManager : MonoBehaviour
             StartNewRound();
     }
 
+    void OnDestroy()
+    {
+        if (Instance == this) Instance = null;
+    }
+
 }
